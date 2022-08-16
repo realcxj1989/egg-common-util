@@ -1,0 +1,4 @@
+{
+  "upgrade": true,
+  "reject": ["jaeger-client", "@types/jaeger-client", "opentracing"]
+}
