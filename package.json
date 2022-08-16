@@ -1,5 +1,5 @@
 {
-  "name": "@cxj/egg-common-util",
+  "name": "egg-common-util",
   "version": "0.1.0",
   "description": "common module for egg",
   "main": "lib/index.js",
