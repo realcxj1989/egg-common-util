@@ -1,0 +1,107 @@
+{
+  "name": "@cxj/egg-common-util",
+  "version": "0.1.0",
+  "description": "common module for egg",
+  "main": "lib/index.js",
+  "files": [
+    "app/**/*.{js,d.ts}",
+    "lib/**/*.{js,d.ts}",
+    "config/**/*.{js,d.ts}",
+    "index.d.ts",
+    "app.js",
+    "app.d.ts"
+  ],
+  "types": "./index.d.ts",
+  "eggPlugin": {
+    "name": "eggCommonUtil"
+  },
+  "egg": {
+    "typescript": true
+  },
+  "dependencies": {
+    "@zcong/node-redis-cache": "^0.8.0-beta.0",
+    "@zcong/once": "^0.2.1",
+    "bull": "^4.1.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.13.2",
+    "cockatiel": "^2.0.2",
+    "egg-logger": "^2.6.2",
+    "jaeger-client": "^3.18.1",
+    "joi": "^17.5.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "opentracing": "^0.14.4",
+    "promise.allsettled": "^1.0.5",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/bull": "^3.15.6",
+    "@types/egg-mock": "^3.0.5",
+    "@types/jaeger-client": "^3.15.4",
+    "@types/jest": "^27.0.3",
+    "@types/jsonwebtoken": "^8.5.6",
+    "@types/lodash": "^4.14.177",
+    "@types/node": "^16.11.11",
+    "@types/prettier": "^2.4.2",
+    "@types/promise.allsettled": "^1.0.3",
+    "@types/rimraf": "^3.0.2",
+    "@types/supertest": "^2.0.11",
+    "@types/uuid": "^8.3.3",
+    "autod": "^3.1.2",
+    "egg": "^2.32.0",
+    "egg-bin": "^4.16.4",
+    "egg-ci": "^1.19.0",
+    "egg-mock": "^4.1.0",
+    "egg-ts-helper": "^1.29.1",
+    "husky": "^7.0.4",
+    "jest": "^27.4.3",
+    "lint-staged": "^12.1.2",
+    "prettier": "^2.5.0",
+    "rimraf": "^3.0.2",
+    "supertest": "^6.1.6",
+    "ts-jest": "^27.0.7",
+    "tslib": "^2.3.1",
+    "tslint": "^6.1.2",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^4.5.2"
+  },
+  "engines": {
+    "node": ">=8.9.0"
+  },
+  "scripts": {
+    "test": "npm run lint -- --fix && npm run test-local",
+    "test-local": "egg-bin test -r egg-ts-helper/register",
+    "cov": "egg-bin cov -r egg-ts-helper/register",
+    "lint": "tslint --project .",
+    "ci": "npm run cov",
+    "autod": "autod",
+    "tsc": "npm run clean && tsc -p tsconfig.build.json",
+    "clean": "rimraf app/**/*.{js,d.ts,js.map} lib/**/*.{js,d.ts,js.map} config/**/*.{js,d.ts,js.map} app.{js,d.ts,js.map}",
+    "prepublishOnly": "npm run tsc",
+    "format": "prettier --write '**/*.{ts,json,md}'",
+    "jest": "jest --detectOpenHandles --forceExit",
+    "prepare": "husky install"
+  },
+  "ci": {
+    "version": "8"
+  },
+  "eslintIgnore": [
+    "coverage"
+  ],
+  "keywords": [
+    "egg",
+    "ts"
+  ],
+  "jest": {
+    "preset": "ts-jest"
+  },
+  "lint-staged": {
+    "*.{json,ts}": "prettier --write"
+  },
+  "author": "realcxj1989 <362377487@qq.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/realcxj1989/egg-common-util/issues"
+  },
+  "homepage": "https://github.com/realcxj1989/egg-common-util#readme"
+}
