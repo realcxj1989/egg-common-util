@@ -1,5 +1,6 @@
 import * as crypto from 'crypto';
 import * as _ from 'lodash';
+import qs from 'querystring';
 
 export interface RcCommonResp {
   code: number;
@@ -24,7 +25,7 @@ export interface PagnationOffset {
 
 export const parseIntWithDefault = (
   str: string | undefined,
-  defaultVal: number
+  defaultVal: number,
 ) => {
   if (!str) {
     return defaultVal;
@@ -44,12 +45,12 @@ export const parseIntWithDefault = (
 export const parsePagnation = <T extends PagnationPage>(
   qs: T,
   defaultCurrent: number = 1,
-  defaultPageSize: number = 100
+  defaultPageSize: number = 100,
 ) => {
   const current = Math.max(parseIntWithDefault(qs.current, defaultCurrent), 1);
   const pageSize = Math.max(
     parseIntWithDefault(qs.pageSize, defaultPageSize),
-    1
+    1,
   );
 
   return {
@@ -68,7 +69,7 @@ export const parsePagnation = <T extends PagnationPage>(
 export const parsePagnationOffsetLimit = <T extends PagnationOffset>(
   qs: T,
   defaultLimit: number = 100,
-  defaultOffset: number = 0
+  defaultOffset: number = 0,
 ) => {
   const limit = Math.max(parseIntWithDefault(qs.limit, defaultLimit), 1);
   const skip = Math.max(parseIntWithDefault(qs.offset, defaultOffset), 0);
@@ -81,7 +82,7 @@ export const parsePagnationOffsetLimit = <T extends PagnationOffset>(
 
 export const normalizeInput = <T extends object = any>(
   input: T,
-  keys: string[] = ['__v', 'gmt_modified', 'gmt_create', 'is_deleted']
+  keys: string[] = [ '__v', 'gmt_modified', 'gmt_create', 'is_deleted' ],
 ): Partial<T> => {
   return _.omit(input, keys);
 };
@@ -89,7 +90,7 @@ export const normalizeInput = <T extends object = any>(
 export const buildMap = <T = any>(
   arr: T[],
   key: string,
-  keyTransformFn?: (key: any) => string | undefined
+  keyTransformFn?: (key: any) => string | undefined,
 ): Map<string, T> => {
   const res = new Map<string, T>();
   for (const obj of arr) {
@@ -118,9 +119,9 @@ export const getOsByDeviceInfo = (info: string): string => {
 
 export const randString = (n: number): string => {
   return crypto
-    .randomBytes(Math.ceil(n / 2))
-    .toString('hex')
-    .slice(n % 2);
+  .randomBytes(Math.ceil(n / 2))
+  .toString('hex')
+  .slice(n % 2);
 };
 
 // 5c80b6b33d2dc300d23adf08-w-c0912
@@ -142,7 +143,7 @@ export const toBool = (str: string | undefined) => {
   if (!str) {
     return false;
   }
-  return !['0', 'false'].includes(str);
+  return ![ '0', 'false' ].includes(str);
 };
 
 export const randomString = (n: number = 10) => {
@@ -176,3 +177,15 @@ export const unstableDeviation = (base: number, deviation: number) => {
  */
 export const unstableDeviationInt = (base: number, deviation: number) =>
   Math.floor(unstableDeviation(base, deviation));
+
+// add query for url
+export const addQuery = (url: string, q: Record<string, string>): string => {
+  if (!url.startsWith('http')) {
+    return url;
+  }
+  const query = qs.stringify(q);
+  if (!query) {
+    return url;
+  }
+  return url + (url.includes('?') ? '&' : '?') + query;
+};
